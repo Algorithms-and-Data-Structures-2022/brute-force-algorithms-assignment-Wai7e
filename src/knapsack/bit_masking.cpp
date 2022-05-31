@@ -23,9 +23,7 @@ namespace assignment {
     int best_profit_mask = 0;
 
     // Tip: What if the weight is equal to the max weight? Can we stop the process?
-    if (capacity == sum_helper(weights)){
-      return mask2indices(profits, num_subsets-1);
-    }
+
     // 0..00, 0..01, 0..10, 0..11, ..., 1..11
     for (int mask = 0; mask < num_subsets; mask++) {  // 2^N
 
@@ -35,30 +33,26 @@ namespace assignment {
       // вычисление общего веса рассматриваемых элементов
       const int curr_weight = sum_helper(masked_weights);
 
-      // ... обработка случая превышения емкости рюкзака
-      if (curr_weight>capacity){
+      if (curr_weight > capacity) {
         continue;
       }
+      // ... обработка случая превышения емкости рюкзака
+
       // массив из "пользы" рассматриваемых элементов
       const auto masked_profits = mask2elems(profits, mask);
 
       // вычисление общей "пользы" рассматриваемых элементов
       const int curr_profit = sum_helper(masked_profits);
-      if (curr_profit>best_profit){
-        best_profit_mask = mask;
+
+      if (curr_profit > best_profit) {
         best_profit = curr_profit;
+        best_profit_mask = mask;
       }
       // ... обработка случая нахождения большего значения "пользы"
     }
 
     // ... возвращение итогового результата: используйте mask2indices;
-
     return mask2indices(profits, best_profit_mask);
   }
 
 }  // namespace assignment
-© 2022 GitHub, Inc.
-               Terms
-                   Privacy
-                       Security
-                           St

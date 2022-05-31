@@ -32,7 +32,7 @@ namespace assignment {
     }
 
     // Ограничение 1: текущая сумма должна быть меньше целевой
-    if (sum >target_sum) {
+    if (sum > target_sum) {
       // если превысили целевую сумму, то сделать ее меньше уже не получится (все элементы множества положительные)
       return;
     }
@@ -45,10 +45,20 @@ namespace assignment {
 
     // если найдено подмножество с целевой суммой, то сохраняем в результат это подмножество
     if (sum == target_sum) {
-      indices.push_back(mask2indices(set, mask));
-      return;
+      const auto num_elems = static_cast<int>(set.size());  // N
+      auto subset = std::vector<int>();
+      for (int j = 0; j < num_elems; j++) {
+        if (is_bit_set(mask,j)) {
+          subset.push_back(j);
+        }
+      }
+      indices.push_back(subset);
       // ... сохранение в результат
       // ... нужно ли в этой ветке рекурсии рассматривать следующие элементы?
+    }
+
+    if (index == static_cast<int>(set.size() - 1)) {
+      return;
     }
 
     // рассматриваем следующий элемент

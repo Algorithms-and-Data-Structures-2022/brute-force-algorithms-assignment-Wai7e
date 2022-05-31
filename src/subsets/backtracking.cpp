@@ -26,19 +26,24 @@ namespace assignment {
     assert(mask >= 0 && index >= -1);
 
     // Ограничение: рассмотрены все элементы множества
+    const auto num_elems = static_cast<int>(set.size());  // N
     if (index == static_cast<int>(set.size()) - 1) {
-      subsets.push_back(mask2indices(set, mask));
-      // ... сохранение полученного подмножества
-
+      auto subset = std::vector<int>();
+      for (int j = 0; j < num_elems; j++) {
+        if (is_bit_set(mask,j)) {
+          subset.push_back(j);
+        }
+      }
+      subsets.push_back(subset);
       return;  // возвращаемся по дереву рекурсии
     }
 
     index += 1;  // рассматриваем следующий элемент
 
-    // здесь должны быть рекурсивные вызовы ...
-    // включаем или не включаем элемент с текущим индексом в подмножество (используя битовую маску)
     generate(set, index, mask, subsets);
     generate(set, index, set_bit(mask, index), subsets);
+    // здесь должны быть рекурсивные вызовы ...
+    // включаем или не включаем элемент с текущим индексом в подмножество (используя битовую маску)
   }
 
 }  // namespace assignment
